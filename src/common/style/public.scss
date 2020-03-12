@@ -1,0 +1,21 @@
+/*将px转换成rem*/
+@function px2rem($px) {
+  @return $px / 13 + rem;
+}
+
+body,html,p,ul{
+  padding: 0;
+  margin: 0;
+}
+li{
+  list-style-type: none;
+}
+
+html,body{
+  height: 100%;
+  width: 100%;
+}
+.clearFix{
+  clear: both;
+}
+
