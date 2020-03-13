@@ -1,37 +1,42 @@
 <template>
   <div class="test-info">
     <ul>
-      <li>
-        <span class="select-num">A</span>
-        <div class="select-val">
-          运动变化性
-        </div>
-      </li>
-      <li>
-        <span class="select-num">A</span>
-        <div class="select-val">
-          运动变化性
-        </div>
+      <li v-for="(item, index) in option" :key="index" :class="{active:radioChoice==item.title || checkChoice.includes(item.title)}" @click="choseThis(item)">
+        <span class="select-num">{{item.title}}</span>
+        <div class="select-val">{{item.value}}</div>
       </li>
     </ul>
-    <i class="iconfont icon-ai-mark"></i>
   </div>
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'yun-test-info',
+  props: ['option','choiceType'],
   data(){
     return {
-      radioChoice: [],      // 单选
-      checkChoice: []       // 多选
+      radioChoice: '',      // 单选
+      checkChoice: [],       // 多选
     }
   },
   computed: {
     ...mapGetters([''])
   },
   methods: {
-    
+    // 选择答案
+    choseThis(obj){
+      // console.log(event.target.parentNode.classList.add('active'))
+      if(this.choiceType === 1) this.radioChoice = obj.title
+      if(this.choiceType === 2 && !this.checkChoice.includes(obj.title)){
+        this.checkChoice.push(obj.title)
+      }else{
+        let checkedIndex = this.checkChoice.findIndex((option)=>{
+          return option===obj.title
+        })
+        delete this.checkChoice[checkedIndex]
+      }
+      this.$forceUpdate()
+    }
   }
 }
 </script>
@@ -39,6 +44,8 @@ export default {
   .test-info { 
     padding: 2rem 1rem;
     box-sizing: border-box;
+    background: white;
+    margin-top: 0.5rem;
 
     ul{
       li{
@@ -61,6 +68,12 @@ export default {
           margin-left: 3rem;
           min-height: 2rem;
           line-height: 2rem;
+        }
+      }
+      li.active{
+        .select-num{
+          background: rgb(60, 184, 70);
+          color: white;
         }
       }
     }

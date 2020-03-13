@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
+import Test from '../components/test.vue'
 import Home from '../views/Home.vue'
 import Paint from '../components/drill/Paint.vue'
 import IconFontList from '../views/IconFontList.vue'
 import PaintFooter from '../components/drill/Footer.vue'
+import Drill from '@/views/Drill.vue'
+import Issus from '@/views/Issus.vue'
 
 Vue.use(VueRouter)
 
@@ -14,6 +16,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   },
   {
     path: '/about',
@@ -37,6 +44,16 @@ const routes = [
     path: '/paintFooter',
     name: 'paintFooter',
     component: PaintFooter
+  },
+  {
+    path: '/drill',
+    name: 'drill',
+    component: Drill
+  },
+  {
+    path: '/issus',
+    name: 'issus',
+    component: Issus
   }
 ]
 
