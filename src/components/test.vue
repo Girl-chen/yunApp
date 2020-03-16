@@ -1,35 +1,25 @@
-<!-- The ref attr used to find the swiper instance -->
 <template>
-  <div class="container">
-  <div class="top">
-    我是內容
+  <div>
+    {{value}}
+    <button @click="test">show</button>
   </div>
-  <div class="middle">
-    <p>我是內容</p>
-    <p>我是內容</p>
-  </div>
-</div>
 </template>
-
 <script>
-  export default {
-    name: 'carrousel',
-    
+export default {
+  name: 'test',
+  data(){
+    return {
+      value: [{value:'234rf'}],
+      x: JSON.parse(JSON.stringify([1,234]))
+    }
+  },
+  methods:{
+    test(){
+      this.value[0].value = '222'
+      console.log(this.value)
+      this.value.split(0, 1)
+      console.log(this.value)
+    }
   }
+}
 </script>
-<style lang="scss">
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: red;
-}
-
-.top {
-  background: blue;
-}
-.middle {
-  background: green;
-  flex-grow: 1;
-}
-</style>

@@ -2,15 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import ElementUI from 'element-ui'                // 饿了么UI
-import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueAwesomeSwiper from 'vue-awesome-swiper'   // swiper
+// import MobileSelect from 'mobile-select'            // 底部选择组件
+import Vant from 'vant';                          // vant
+import 'vant/lib/index.css';
 import 'swiper/dist/css/swiper.css'
-import 'element-ui/lib/theme-chalk/index.css'
 import './registerServiceWorker'                  // PWD
+// import '@/common/font/iconfont.css'
 import './common/style/public.scss'               // 公共样式
 
-Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
+Vue.use(Vant)
+// Vue.use(MobileSelect)
 Vue.config.productionTip = false
 
 new Vue({
