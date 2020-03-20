@@ -16,7 +16,7 @@ export default {
   data(){
     return {
       radioChoice: '',      // 单选
-      checkChoice: [],       // 多选
+      checkChoice: [],      // 多选
     }
   },
   computed: {
@@ -26,14 +26,16 @@ export default {
     // 选择答案
     choseThis(obj){
       // console.log(event.target.parentNode.classList.add('active'))
+      // 单选
       if(this.choiceType === 1) this.radioChoice = obj.title
+      // 多选
       if(this.choiceType === 2 && !this.checkChoice.includes(obj.title)){
         this.checkChoice.push(obj.title)
       }else{
         let checkedIndex = this.checkChoice.findIndex((option)=>{
           return option===obj.title
         })
-        delete this.checkChoice[checkedIndex]
+        this.checkChoice.splice(checkedIndex, 1)
       }
       this.$forceUpdate()
     }

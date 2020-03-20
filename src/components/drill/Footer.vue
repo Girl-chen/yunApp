@@ -5,7 +5,7 @@
         <i class="iconfont icon-shoucang2"></i>
       </li>
       <li>
-        <span class="time">00 : 00</span>
+        <van-count-down class="vant-time" ref="countDown" millisecond @finish="finish" :auto-start='true' :time="timer" format="mm:ss" />
       </li>
       <li>
         <i class="iconfont icon-zonglan"></i>
@@ -20,15 +20,14 @@ export default {
   name: 'yun-drill-footer',
   data() {
     return {
-      newTime: null
+      timer: 30*60*1000
     }
   },
   created(){
     // var t = new Date()
     // console.log(format(t, 'yyyy-MM-dd hh:mm'))
-    this.setTime(new Date().getTime())
+    // this.setTime(new Date().getTime())
     
-
   },
   computed: {
     ...mapGetters(['time'])
@@ -37,6 +36,12 @@ export default {
     ...mapMutations({
       setTime: 'SET_TIME'
     }),
+    finish(){
+      this.$toast({message: '测试时间已结束！'})
+    },
+    start(){
+      this.$refs.countDown.start();
+    }
 
   }
 }
@@ -59,9 +64,11 @@ $font-size: 1.3rem;
     li{
       padding: 1.5rem;
 
-      .time{
+      .vant-time{
         padding: 2rem 1rem;
-        box-shadow: 0px 0px 10px #cccccc;
+        // box-shadow: 0px 0px 10px #cccccc;
+        font-size: 1.5rem;
+        letter-spacing: 0.2rem;
       }
     }
 

@@ -7,7 +7,7 @@
             <h2>{{item.type}}</h2>
             <p><span class="now">{{index + 1}}</span> / <span class="all">{{question.length}}</span></p>
           </div>
-          <el-progress :percentage="((index+1)/question.length)*100" :show-text='false' :color='progressColor'></el-progress>
+          <van-progress :percentage="((index+1)/question.length)*100" :show-pivot='false' />
           <div class="question">{{item.question}}</div>
         </div>
         <yun-drill-paint class="drill-body" :choiceType='item.choiceType' :option='item.options' />

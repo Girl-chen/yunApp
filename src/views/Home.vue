@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-link :to="{path:'/drill'}" tag="button">试题练习</router-link>
+    <router-link :to="{path:'/issus'}" tag="button">发布试题</router-link>
   </div>
 </template>
 

@@ -10,7 +10,7 @@ export const question = [
     anwser: 'B',
     type: '选择题',
     choiceType: 1,
-    id: '1'
+    id: '1',
   },
   {
     question: '在马克思主义理论体系中，科学社会主义是其()',
@@ -38,5 +38,18 @@ export const question = [
     type: '选择题',
     choiceType: 2,      // 选择题类型： 1：单选   2：多选
     id: '3'
+  },
+  {
+    question: '在19世纪三大工人运动中，集中反映工人政治要求的是()',
+    options: [
+      {title: 'A', value: '法国里昂工人起义'},
+      {title: 'B', value: '英国宪章运动'},
+      {title: 'C', value: '芝加哥工人起义'},
+      {title: 'D', value: '德国西里西亚纺织工人起义'}
+    ], 
+    anwser: ['B'],
+    type: '单选题',
+    choiceType: 1,      // 选择题类型： 1：单选   2：多选
+    id: '4'
   }
 ]
