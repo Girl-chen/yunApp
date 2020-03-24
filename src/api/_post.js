@@ -1,12 +1,12 @@
 import fetch from './fetch'
 
-// 添加数据
-export function POST_DATA_ALL(data) {
+// 添加试题数据
+export function POST_QUESTION_DATA(data) {
   let info = {
     method: '',
     data: data
   }
-  return fetch.post("/api/add", info).then(res => {
+  return fetch.post("/api/addQuestion", info).then(res => {
     return Promise.resolve(res.data);
   })
 }

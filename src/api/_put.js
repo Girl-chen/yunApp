@@ -1,7 +1,7 @@
 import fetch from './fetch'
 
 // 获修改数据
-export function PUT_DATA_ALL(data) {
+export function PUT_DATA(data) {
   let info = {
     method: '',
     data: data

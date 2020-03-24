@@ -53,3 +53,11 @@ export const question = [
     id: '4'
   }
 ]
+
+export const user1 = {
+  id: 1,
+  name: 'canmen',
+  postNum: 0,
+  email: '2826315773@qq.com',
+  reprint: 0
+}

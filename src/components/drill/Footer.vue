@@ -1,14 +1,18 @@
 <template>
   <div class="paint-footer">
     <ul>
-      <li>
+      <li class="left">
         <i class="iconfont icon-shoucang2"></i>
       </li>
-      <li>
+      <li class="time">
         <van-count-down class="vant-time" ref="countDown" millisecond @finish="finish" :auto-start='true' :time="timer" format="mm:ss" />
       </li>
-      <li>
+      <li class="right-all" v-show="activeIndex!==questionBank.length-1" @click="showAll">
         <i class="iconfont icon-zonglan"></i>
+      </li>
+      <li class="right-send" v-show="activeIndex===questionBank.length-1">
+        <!-- <i class="send iconfont icon-tijiao"></i> -->
+        <span class="text">提交</span>
       </li>
     </ul>
   </div>
@@ -23,14 +27,9 @@ export default {
       timer: 30*60*1000
     }
   },
-  created(){
-    // var t = new Date()
-    // console.log(format(t, 'yyyy-MM-dd hh:mm'))
-    // this.setTime(new Date().getTime())
-    
-  },
+  props: ['activeIndex'],
   computed: {
-    ...mapGetters(['time'])
+    ...mapGetters(['questionBank'])
   },
   methods: {
     ...mapMutations({
@@ -41,6 +40,11 @@ export default {
     },
     start(){
       this.$refs.countDown.start();
+    },
+
+    // 查看全部试题情况，其中包含：未完成、已完成、提交
+    showAll(){
+      
     }
 
   }
@@ -68,6 +72,29 @@ $font-size: 1.3rem;
         padding: 2rem 1rem;
         // box-shadow: 0px 0px 10px #cccccc;
         font-size: 1.5rem;
+        letter-spacing: 0.2rem;
+      }
+      .iconfont.send{
+        color: green;
+        box-shadow: 0 0 10px green;
+        font-size: 2rem;
+      }
+    }
+    .left{
+      width: 30%;
+    }
+    .time{
+      width: 30%;
+    }
+    .right-all, .right-send{
+      width: 30%;
+
+      .text{
+        -webkit-text-stroke: 1px white;
+        -webkit-text-fill-color: transparent;
+        padding: 0.5rem 1rem;
+        background: rgb(118, 240, 48);
+        border-radius: 0.2rem;
         letter-spacing: 0.2rem;
       }
     }

@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store/index'
+import {user1} from '../common/js/utils'
+
 
 import Test from '../components/test.vue'
 import Home from '../views/Home.vue'
@@ -8,6 +11,7 @@ import IconFontList from '../views/IconFontList.vue'
 import PaintFooter from '../components/drill/Footer.vue'
 import Drill from '@/views/Drill.vue'
 import Issus from '@/views/Issus.vue'
+import Sign from '@/views/Sign.vue'
 
 Vue.use(VueRouter)
 
@@ -25,25 +29,12 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/paint',
-    name: 'paint',
-    component: Paint
   },
   {
     path: '/iconList',
     name: 'iconList',
     component: IconFontList
-  },
-  {
-    path: '/paintFooter',
-    name: 'paintFooter',
-    component: PaintFooter
   },
   {
     path: '/drill',
@@ -54,6 +45,11 @@ const routes = [
     path: '/issus',
     name: 'issus',
     component: Issus
+  },
+  {
+    path: '/sign',
+    name: 'sign',
+    component: Sign
   }
 ]
 
@@ -62,5 +58,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) =>{
+  if(!store.getters.userinfo){
+    store.commit('SET_USERINFO', user1)
+  }
+  next()
+})
+
 
 export default router

@@ -2,6 +2,7 @@
   <div>
     <button @click="testPost">POST</button>
     <button @click="testGet">GET</button>
+    <button @click="testRandGet">RANDGET</button>
     <button @click="testDelete">DELETE</button>
     <button @click="testPut">PUT</button>
   </div>
@@ -47,7 +48,7 @@ export default {
         ]
       }
 
-      GET.GET_DATA_ALL(data).then(res =>{
+      GET.GET_DATA(data).then(res =>{
         console.log(res)
       })
       .catch(error =>{
@@ -86,7 +87,21 @@ export default {
           ]
       }
 
-      PUT.PUT_DATA_ALL(data).then(res =>{
+      PUT.PUT_DATA(data).then(res =>{
+        console.log(res)
+      })
+      .catch(error =>{
+        console.log(error)
+      })
+    },
+
+
+    testRandGet(){
+      let data = {
+          table: 'test'
+      }
+
+      GET.RAND_GET_DATA(data).then(res =>{
         console.log(res)
       })
       .catch(error =>{

@@ -18,8 +18,6 @@
           <van-checkbox class="checkBox" :name="'checked-'+index" checked-color='#7ad151' v-show="checkType==='多选'"></van-checkbox>
         </div>
       </van-checkbox-group>
-      
-      
     </div>
     <!-- 答案 -->
     <div class="item anwser">
@@ -43,6 +41,9 @@
 </template>
 <script>
 import MobileSelect from 'mobile-select'
+import { mapGetters } from 'vuex'
+import * as PUT from '../api/_put'
+import * as POST from '../api/_post'
 export default {
   name: 'yun-issus',
   data() {
@@ -51,11 +52,13 @@ export default {
       value: '',
       checkType: '单选',
       options: [{id: 1, value: '', sort: 'A'}],
-      boxOptions: [{data:[{id:'',value:'',sort:''},{id:1,value:'1',sort:'1'}]}],
       anwser: '',
       boxAnwser: '',
       result: []
     }
+  },
+  computed: {
+    ...mapGetters(['userinfo'])
   },
   watch:{
     result: function(newValue, oldValue){
@@ -67,9 +70,9 @@ export default {
   },
   mounted(){
     let that = this
-    this.selectType = new MobileSelect({
+    this.selectQType = new MobileSelect({
       trigger: '#choiceType',
-      title: '选择类型',
+      title: '选择题型',
       wheels: [
         {
           data:[
@@ -90,17 +93,6 @@ export default {
             message: '请选择答案'
           })
         }
-        // that.setBoxAnwser() 
-        // console.log(that.boxOptions[0])
-        // that.selectMoreAnwser.updateWheel(0, [{id:'',value:'',sort:''},{id:2222,value:'aaaaa',sort:'C'}])
-        // that.selectMoreAnwser.updateWheels([{data:[{id:0,value:'',sort:''},{id:2,value:'222',sort:'B'}]}])
-        // that.boxOptions = [
-        //   {data:[{id:'',value:'',sort:''},{id:1,value:'1',sort:'1'}]},
-        //   {data:[{id:'',value:'',sort:''},{id:2,value:'2',sort:'1'}]},
-        //   {data:[{id:'',value:'',sort:''},{id:3,value:'3',sort:'1'}]},
-        //   {data:[{id:'',value:'',sort:''},{id:4,value:'4',sort:'1'}]}
-        // ]
-        // that.selectMoreAnwser.updateWheel(2, [{id:'',value:'',sort:''},{id:2222,value:'aaaaa',sort:'C'}])
       }
     }),
 
@@ -123,22 +115,7 @@ export default {
       }
     })
 
-    this.selectMoreAnwser = new MobileSelect({
-        trigger: '#boxAnwser',
-        title: '选择答案(多选)',
-        triggerDisplayData: false,
-        wheels: that.boxOptions,
-        // wheels:[
-        //   {data:[{id:0,value:'',sort:''},{id:1,value:'111',sort:'A'}]},
-        //   {data:[{id:0,value:'',sort:''},{id:2,value:'222',sort:'B'}]}
-        // ],
-        callback: function(indexArr, data){
-          console.log(data)
-          data.forEach(element => {
-            that.boxAnwser += `${element.sort} `
-          });
-        }
-      })
+    console.log(this.userinfo)
   },
   methods:{
     // 加载多选 error
@@ -223,7 +200,22 @@ export default {
         }
       }
 
-      console.log('next to ajax send data...')
+      let data = {
+        title: this.question,
+        options: JSON.stringify(this.options),
+        userID: this.userinfo.id,
+        type: '马克思基本原理概论'
+      }
+      if(this.checkType === '单选'){
+        data.anwser = this.anwser
+        data.qtype = 1
+      }else if(this.checkType === '多选'){
+        data.anwser = this.boxAnwser
+        data.qtype = 2
+      }
+      POST.POST_QUESTION_DATA(data).then(res =>{
+        console.log(res)
+      })
     },
     // 重置
     reset(){

@@ -20,7 +20,6 @@ axios.interceptors.request.use(config =>{
     loadCount--;
     if(!loadCount) {
       loading.clear()
-
     }
     return Promise.reject(error)
   }

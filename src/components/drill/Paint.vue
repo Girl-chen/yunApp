@@ -1,8 +1,8 @@
 <template>
   <div class="test-info">
     <ul>
-      <li v-for="(item, index) in option" :key="index" :class="{active:radioChoice==item.title || checkChoice.includes(item.title)}" @click="choseThis(item)">
-        <span class="select-num">{{item.title}}</span>
+      <li v-for="(item, index) in option" :key="index" :class="{active:radioChoice==item.sort || checkChoice.includes(item.sort)}" @click="choseThis(item)">
+        <span class="select-num">{{item.sort}}</span>
         <div class="select-val">{{item.value}}</div>
       </li>
     </ul>
@@ -27,13 +27,13 @@ export default {
     choseThis(obj){
       // console.log(event.target.parentNode.classList.add('active'))
       // 单选
-      if(this.choiceType === 1) this.radioChoice = obj.title
+      if(this.choiceType === 1) this.radioChoice = obj.sort
       // 多选
-      if(this.choiceType === 2 && !this.checkChoice.includes(obj.title)){
-        this.checkChoice.push(obj.title)
+      if(this.choiceType === 2 && !this.checkChoice.includes(obj.sort)){
+        this.checkChoice.push(obj.sort)
       }else{
         let checkedIndex = this.checkChoice.findIndex((option)=>{
-          return option===obj.title
+          return option===obj.sort
         })
         this.checkChoice.splice(checkedIndex, 1)
       }
