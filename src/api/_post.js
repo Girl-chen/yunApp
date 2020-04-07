@@ -6,7 +6,7 @@ export function POST_QUESTION_DATA(data) {
     method: '',
     data: data
   }
-  return fetch.post("/api/addQuestion", info).then(res => {
+  return fetch.post("/api/addQuestion", info).then(res => {debugger
     return Promise.resolve(res.data);
   })
 }

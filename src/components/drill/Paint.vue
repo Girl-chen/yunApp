@@ -12,7 +12,7 @@
 import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'yun-test-info',
-  props: ['option','choiceType'],
+  props: ['option','choiceType','id'],
   data(){
     return {
       radioChoice: '',      // 单选
@@ -20,23 +20,38 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([''])
+    ...mapGetters(['questionBank'])
   },
   methods: {
+    ...mapMutations({
+      setWordQuestion: 'SET_QUESTION_WORK'
+    }),
     // 选择答案
     choseThis(obj){
+      let data = {
+        id: this.id
+      }
       // console.log(event.target.parentNode.classList.add('active'))
       // 单选
-      if(this.choiceType === 1) this.radioChoice = obj.sort
-      // 多选
-      if(this.choiceType === 2 && !this.checkChoice.includes(obj.sort)){
-        this.checkChoice.push(obj.sort)
-      }else{
-        let checkedIndex = this.checkChoice.findIndex((option)=>{
-          return option===obj.sort
-        })
-        this.checkChoice.splice(checkedIndex, 1)
+      if(this.choiceType === 1) {
+        this.radioChoice = obj.sort
+        data['uAnswer'] = this.radioChoice
       }
+      // 多选
+      if(this.choiceType === 2){
+        if(!this.checkChoice.includes(obj.sort)){
+          this.checkChoice.push(obj.sort)
+        }else{
+          let checkedIndex = this.checkChoice.findIndex((option)=>{
+            return option===obj.sort
+          })
+          this.checkChoice.splice(checkedIndex, 1)
+        }
+        let boxStr = this.checkChoice.join(' ')
+        data['uAnswer'] = boxStr
+      }
+      
+      this.setWordQuestion(data)
       this.$forceUpdate()
     }
   }

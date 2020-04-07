@@ -6,12 +6,12 @@ import {user1} from '../common/js/utils'
 
 import Test from '../components/test.vue'
 import Home from '../views/Home.vue'
-import Paint from '../components/drill/Paint.vue'
 import IconFontList from '../views/IconFontList.vue'
-import PaintFooter from '../components/drill/Footer.vue'
 import Drill from '@/views/Drill.vue'
 import Issus from '@/views/Issus.vue'
 import Sign from '@/views/Sign.vue'
+import My from '@/views/My.vue'
+import NotFind from '@/components/NotFind.vue'
 
 Vue.use(VueRouter)
 
@@ -50,6 +50,16 @@ const routes = [
     path: '/sign',
     name: 'sign',
     component: Sign
+  },
+  {
+    path: '/my',
+    name: 'my',
+    component: My
+  },
+  {
+    path: '/notFind',
+    name: 'notFind',
+    component: NotFind
   }
 ]
 

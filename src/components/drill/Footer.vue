@@ -10,7 +10,7 @@
       <li class="right-all" v-show="activeIndex!==questionBank.length-1" @click="showAll">
         <i class="iconfont icon-zonglan"></i>
       </li>
-      <li class="right-send" v-show="activeIndex===questionBank.length-1">
+      <li class="right-send" v-show="activeIndex===questionBank.length-1" @click="showAll"> 
         <!-- <i class="send iconfont icon-tijiao"></i> -->
         <span class="text">提交</span>
       </li>
@@ -20,6 +20,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import {format} from '../../common/js/common'
+
 export default {
   name: 'yun-drill-footer',
   data() {
@@ -44,7 +45,7 @@ export default {
 
     // 查看全部试题情况，其中包含：未完成、已完成、提交
     showAll(){
-      
+      this.$emit('toggleSta')
     }
 
   }
@@ -53,10 +54,12 @@ export default {
 <style lang="scss" scoped>
 $font-size: 1.3rem;
 .paint-footer{
+  position: relative;
   height: 4rem;
   // box-shadow: 0px 0px 10px rgb(165, 164, 164);
   overflow: hidden;
   background: white;
+  z-index: 10;
 
   ul{
     height: 100%;

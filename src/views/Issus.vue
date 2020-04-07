@@ -13,19 +13,19 @@
       
       <van-checkbox-group v-model="result">
         <div class="opiton-item" v-for="(item, index) in options" :key="index" >
-          <input type="text" :class="(anwser===item.sort&&checkType==='单选')?'success':''" v-model="item.value" @input="updateOption" placeholder="请输入 (选项) " />
+          <input type="text" :class="(answer===item.sort&&checkType==='单选')?'success':''" v-model="item.value" @input="updateOption" placeholder="请输入 (选项) " />
           <i class="iconfont icon-shanchu" @click="deleteThis(index)" v-show="checkType==='单选'"></i>
           <van-checkbox class="checkBox" :name="'checked-'+index" checked-color='#7ad151' v-show="checkType==='多选'"></van-checkbox>
         </div>
       </van-checkbox-group>
     </div>
     <!-- 答案 -->
-    <div class="item anwser">
-      <input id="anwser" type="button" :value="anwser?anwser:'请选择答案 (单选)'" v-show="checkType=='单选'">
-      <input id="boxAnwser" type="button" :value="boxAnwser?boxAnwser:'请选择答案 (多选)'" v-show="checkType=='多选'">
+    <div class="item answer">
+      <input id="answer" type="button" :value="answer?answer:'请选择答案 (单选)'" v-show="checkType=='单选'">
+      <input id="boxAnswer" type="button" :value="boxAnswer?boxAnswer:'请选择答案 (多选)'" v-show="checkType=='多选'">
 
       <p id="choiceType" ref="choiceType">{{checkType}}</p>
-      <i class="iconfont icon-xia" @click="cdAnwser"></i>
+      <i class="iconfont icon-xia" @click="cdanswer"></i>
     </div>
     <!-- 类型(单选、多选、其他) -->
     <div class="item choiceType"></div>
@@ -51,9 +51,9 @@ export default {
       question: '',
       value: '',
       checkType: '单选',
-      options: [{id: 1, value: '', sort: 'A'}],
-      anwser: '',
-      boxAnwser: '',
+      options: [{value: '', sort: 'A'}],
+      answer: '',
+      boxAnswer: '',
       result: []
     }
   },
@@ -62,9 +62,9 @@ export default {
   },
   watch:{
     result: function(newValue, oldValue){
-      this.boxAnwser = ''
+      this.boxAnswer = ''
       newValue.forEach((obj,index) =>{
-        this.boxAnwser += this.alphabat(Number.parseInt(obj.split('-')[1])) + ' '
+        this.boxAnswer += this.alphabat(Number.parseInt(obj.split('-')[1])) + ' '
       })
     }
   },
@@ -96,8 +96,8 @@ export default {
       }
     }),
 
-    this.selectAnwser = new MobileSelect({
-      trigger: '#anwser',
+    this.selectanswer = new MobileSelect({
+      trigger: '#answer',
       title: '选择答案(单选)',
       wheels: [
         {
@@ -105,13 +105,9 @@ export default {
         }
       ],
       position: [0,0],
-      keyMap:{
-        id: 'id',
-        value: 'value'
-      },
       callback: function(indexArr, data){
         console.log(data)
-        that.anwser = data[0].sort
+        that.answer = data[0].sort
       }
     })
 
@@ -120,22 +116,22 @@ export default {
   methods:{
     // 加载多选 error
     // {data:[{id:11,value:'123',sort:'A'}]}}
-    setBoxAnwser(){
+    setboxAnswer(){
       this.boxOptions = []
       let that = this
       this.options.forEach( obj =>{
         that.boxOptions.push({data:[{id:0,value:'',sort:''},{id:obj.id, value:`${obj.value}`, sort:`${obj.sort}`}]})
       })
-      // this.selectMoreAnwser.updateWheels(this.boxOptions)
+      // this.selectMoreanswer.updateWheels(this.boxOptions)
       
     },
     // 点击下拉图标转到点击按钮
-    cdAnwser(){
+    cdanswer(){
       this.$refs.choiceType.click()
     },
     // 添加选项
     addOptions(){
-      this.options.push({id: (this.options.length+1), value: '', sort: this.alphabat(this.options.length)})
+      this.options.push({value: '', sort: this.alphabat(this.options.length)})
       this.updateOption()
     },
     // 删除此选项
@@ -163,7 +159,7 @@ export default {
     },
     // 更新选项(mobile-select)
     updateOption(){
-      this.selectAnwser.updateWheel(0, this.options)
+      this.selectanswer.updateWheel(0, this.options)
     },
     // 提交
     submit(){
@@ -175,25 +171,25 @@ export default {
         this.$toast({message:'答案至少需要两项'})
         return ;
       }else{
-        let hasAnwser = true
+        let hasanswer = true
         this.options.forEach(obj =>{
           if(!obj.value.trim()){
-            hasAnwser = false
+            hasanswer = false
           }
         })
-        if(!hasAnwser){
+        if(!hasanswer){
           this.$toast({message:'选项内容不能为空'})
           return ;
         }
 
         if(this.checkType === '单选'){
-          if(!this.anwser.trim()){
+          if(!this.answer.trim()){
             this.$toast({message:'请选择答案'})
             return ;
           }
           
         }else{
-          if(this.boxAnwser.trim().split(' ').length < 2){
+          if(this.boxAnswer.trim().split(' ').length < 2){
             this.$toast({message:'多选题至少需要两个正确答案'})
             return ;
           }
@@ -201,20 +197,31 @@ export default {
       }
 
       let data = {
-        title: this.question,
+        question: this.question,
         options: JSON.stringify(this.options),
-        userID: this.userinfo.id,
-        type: '马克思基本原理概论'
+        uid: this.userinfo.id,
+        type: 1,
+        subject: 1
       }
       if(this.checkType === '单选'){
-        data.anwser = this.anwser
-        data.qtype = 1
+        data.answer = this.answer
+        data.type = 1
       }else if(this.checkType === '多选'){
-        data.anwser = this.boxAnwser
-        data.qtype = 2
+        data.answer = this.boxAnswer
+        data.type = 2
       }
       POST.POST_QUESTION_DATA(data).then(res =>{
         console.log(res)
+        if(res.code === 0){
+          this.$toast({
+            message: res.message
+          })
+          this.reset()
+        }else{
+          this.$toast({
+            message: '添加失败'
+          })
+        }
       })
     },
     // 重置
@@ -223,8 +230,8 @@ export default {
       // this.checkType = '单选'
       // this.selectType.locatePosition(0,0)
       this.options = [{id:1, value:'',sort:'A'}]
-      this.anwser = ''
-      this.boxAnwser = ''
+      this.answer = ''
+      this.boxAnswer = ''
       this.result = []
     }
   }
@@ -332,7 +339,7 @@ export default {
       }
     }
   }
-  .anwser{
+  .answer{
     display: flex;
     align-items: center;
     position: relative;
